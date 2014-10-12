@@ -1,0 +1,32 @@
+Intercom implements a Java server and client for the WebSocket Application Messaging Protocol (WAMP).
+WAMP is specified at <a href='http://wamp.ws'>http://wamp.ws</a>.
+
+Intercom implements all WAMP functionality as specified. WAMP handlers on the Server can be easily
+specified via Java annotations. The Intercom library extends the WAMP specification by supporting
+wildcards and a full support of URI's.
+
+Detailed documentation can be produced via JavaDoc.
+
+Intercom can be compiled using ant and the provided build.xml file. The build.properties file
+may need to be updated with dependency paths. By default all dependencies are assumed to be in
+the lib directory which is not included in the release.
+
+Dependencies:
+common library, source code is included in this release but must be compiled first.
+jackson 2.2.3 or compatible, see <a href='http://wiki.fasterxml.com/JacksonHome'>http://wiki.fasterxml.com/JacksonHome</a>
+log4j 2, see <a href='http://logging.apache.org/log4j/2.x/'>http://logging.apache.org/log4j/2.x/</a>
+
+For testing:
+junit, see <a href='http://junit.org/'>http://junit.org/</a>
+hamcrest, see <a href='https://code.google.com/p/hamcrest/'>https://code.google.com/p/hamcrest/</a>
+
+To compile:
+First compile the common library using ant and produce a jar.
+The common library requires log4j, which must be placed in the lib/java directory or the
+build.properties must be updatd.
+For testing, junit and hamcrest must be placed in the lib/java_test directory.
+The output is located under build/jar
+
+Next place all dependencies under the lib/java directory of the Intercom project or update the
+build.properties file. This includes the common library compiled above.
+The output is located under build/jar.
