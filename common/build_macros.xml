@@ -1,0 +1,104 @@
+<project name="macros">
+
+  <target name="clean">
+    <delete dir="${build}"/>
+    <delete dir="${javadocpath}"/>
+  </target>
+
+  <macrodef name="make">
+    <attribute name="library"/>
+    <attribute name="version"/>
+    <sequential>
+      <mkdir dir="${jarpath}"/>
+      <mkdir dir="${classpath}/@{library}"/>
+      <javac srcdir="${src}/@{library}"
+             destdir="${classpath}/@{library}"
+             target="1.7"
+             includeAntRuntime="false"
+             debug="${debug}"
+             deprecation="on">
+        <classpath>
+          <fileset dir="${lib}">
+            <include name="*.jar"/>
+          </fileset>
+          <fileset dir="${jarpath}">
+            <include name="*.jar"/>
+          </fileset>
+        </classpath>
+        <compilerarg value="-Xlint"/>
+      </javac>
+      <jar destfile="${jarpath}/@{library}-@{version}.jar"
+           basedir="${classpath}/@{library}"/>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="make_test">
+    <attribute name="library"/>
+    <sequential>
+      <mkdir dir="${test_classpath}/@{library}"/>
+      <javac srcdir="${tests}/@{library}"
+             destdir="${test_classpath}/@{library}"
+             target="1.7"
+             includeAntRuntime="false"
+             debug="on"
+             deprecation="on">
+        <classpath>
+          <fileset dir="${lib}">
+            <include name="*.jar"/>
+          </fileset>
+          <fileset dir="${test_lib}">
+            <include name="*.jar"/>
+          </fileset>
+          <fileset dir="${jarpath}">
+            <include name="*.jar"/>
+          </fileset>
+        </classpath>
+        <compilerarg value="-Xlint"/>
+      </javac>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="run_test">
+    <attribute name="library"/>
+    <sequential>
+      <junit>
+        <formatter type="plain" usefile="false"/>
+        <classpath>
+          <fileset dir="${lib}">
+            <include name="*.jar"/>
+          </fileset>
+          <fileset dir="${test_lib}">
+            <include name="*.jar"/>
+          </fileset>
+          <fileset dir="${jarpath}">
+            <include name="*.jar"/>
+          </fileset>
+          <pathelement location="${test_classpath}/@{library}"/>
+        </classpath>
+        <batchtest>
+          <fileset dir="${tests}/@{library}">
+            <include name="**/*Test.java"/>
+          </fileset>
+        </batchtest>
+      </junit>
+    </sequential>
+  </macrodef>
+
+  <macrodef name="make_javadoc">
+    <attribute name="library"/>
+    <sequential>
+      <mkdir dir="${javadocpath}/@{library}"/>
+      <javadoc sourcepath="${src}/@{library}" destdir="${javadocpath}/@{library}">
+        <classpath>
+          <fileset dir="${lib}">
+            <include name="*.jar"/>
+          </fileset>
+          <fileset dir="${jarpath}">
+            <include name="*.jar"/>
+          </fileset>
+        </classpath>
+      </javadoc>
+    </sequential>
+  </macrodef>
+
+</project>

@@ -21,11 +21,12 @@ junit, see http://junit.org
 hamcrest, see https://code.google.com/p/hamcrest
 
 To compile:
-First compile the common library using ant and produce a jar.
-The common library requires log4j, which must be placed in the lib/java directory or the build.properties must be updatd.
-For testing, junit and hamcrest must be placed in the lib/java_test directory.
-The output is located under build/jar
+First ensure all dependencies are under the lib/java and lib/java_test directories or update the relevant build.properties.
 
-Next place all dependencies under the lib/java directory of the Intercom project or update the build.properties file.
-This includes the common library compiled above.
+Next compile the common library using 'ant compile' from the common directory.
+
+Finally compile Intercom using 'ant compile' from the intercom directory.
+
 The output is located under build/jar.
+The project can be tested with 'ant test'.
+JavaDoc can be produced with 'ant javadoc' and will be placed into the javadoc directory.
